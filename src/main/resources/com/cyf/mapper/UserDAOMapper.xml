@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.cyf.dao.UserDAO">
+    <!--注册-->
+    <insert id="save" parameterType="User">
+        insert into Sys_mumber values(#{username},#{password},#{phone},#{job})
+
+    </insert>
+    <!--教师添加课题-->
+    <insert id="add_subject">
+        insert into teacher_subject(teacher_id,teacher_subject,sub_status,statu)
+        values (#{teacher_id},#{teacher_subject},"未选","未双选");
+    </insert>
+    <!--学生b阶段添加文章-->
+    <insert id="add_articleA">
+        INSERT INTO article_a (student_id,teacher_id,article_a,article_a_statu,statement)
+        values(#{student_id},#{teacher_id},#{article_a},"未过","无");
+
+    </insert>
+    <!--学生c阶段上传文件-->
+    <insert id="upload">
+        INSERT INTO article_b (student_id,teacher_id,path,statu)
+        values(#{student_id},#{teacher_id},#{path},"未过");
+    </insert>
+    <!--d阶段学生上传-->
+    <insert id="upload_d">
+        INSERT INTO article_c (student_id,teacher_id,path,content,statu)
+        values(#{student_id},#{teacher_id},#{path},#{content},"未过");
+    </insert>
+    <!--登录-->
+    <select id="login" resultType="User">
+        select  username,password,phone,job from Sys_mumber
+        where username=#{username} and password=#{password}
+    </select>
+    <!--流程Super-->
+    <update id="Super">
+        UPDATE Sys_super SET statu=#{statu};
+    </update>
+    <!--检查状态query-->
+    <select id="query" resultType="Statu">
+        select statu from Sys_super;
+    </select>
+    <!--管理员update-->
+    <update id="change_manager">
+        update Sys_mumber set password=#{password},phone=#{phone},job=#{job}
+        where username=#{username};
+    </update>
+    <!--学生在b阶段更新文章-->
+    <update id="update_articleA">
+        update article_a set article_a=#{article_a}
+        where student_id=#{student_id} and teacher_id=#{teacher_id};
+    </update>
+    <!--教师b阶段添加批注-->
+    <update id="setstatement">
+        update article_a set statement=#{statement}
+        where student_id=#{student_id} and teacher_id=#{teacher_id};
+    </update>
+    <!--教师b阶段审批-->
+    <update id="setstatu">
+        update article_a set article_a_statu="通过"
+        where student_id=#{student_id} and teacher_id=#{teacher_id};
+    </update>
+    <!--教师c阶段审批-->
+    <update id="c_pass">
+        update article_b set statu="通过"
+        where student_id=#{student_id} and teacher_id=#{teacher_id};
+    </update>
+    <update id="setscore">
+        update article_c set statu=#{statu}
+        where student_id=#{student_id} and teacher_id=#{teacher_id};
+    </update>
+    <select id="t_Sub">
+        select teacher_subject from teacher_subject
+        where teacher_id = #{username};
+    </select>
+    <select id="t_sub" resultType="Sub">
+        select * from teacher_subject
+        where teacher_id = #{username};
+    </select>
+    <!--教师c阶段查询下载地址-->
+    <select id="download" resultType="java.lang.String">
+        select path from article_b
+        where teacher_id=#{teacher_id} and student_id=#{student_id};
+    </select>
+    <!--教师d阶段下载-->
+    <select id="download2" resultType="java.lang.String">
+        select path from article_c
+        where teacher_id=#{teacher_id} and student_id=#{student_id};
+    </select>
+</mapper>

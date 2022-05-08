@@ -1,0 +1,135 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>emplist</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <link th:href="@{/static/css/style.css}" rel="stylesheet">
+    <link rel="icon" th:href="@{/static/img/swpu.ico}" type="image/x-icon"/>
+</head>
+<body>
+<div id="wrap">
+    <div id="top_content">
+        <div id="header">
+            <div id="rightheader">
+                <p>
+
+                    <br/>
+                </p>
+            </div>
+            <div id="topheader">
+                <h1 id="title">
+                    <a href="#">管理员-角色管理</a>
+                </h1>
+            </div>
+            <div id="navigation">
+            </div>
+        </div>
+        <div id="content">
+            <p id="whereami">
+            </p>
+            <h1>
+                欢迎!
+            </h1>
+            <table class="table">
+                <tr class="table_header">
+                    <td>
+                        用户名
+                    </td>
+                    <td>
+                        密码
+                    </td>
+                    <td>
+                        电话号码
+                    </td>
+                    <td>
+                        角色
+                    </td>
+                    <td>
+                        操作
+                    </td>
+
+                </tr>
+                <tr class="row1" th:each="emp:${emps}">
+                    <td>
+                        <span th:text="${emp.username}"></span>
+                    </td>
+                    <td>
+                        <span th:text="${emp.password}"></span>
+                    </td>
+                    <td>
+                        <span th:text="${emp.phone}"></span>
+                    </td>
+                    <td>
+                        <span th:text="${emp.job}"></span>
+                    </td>
+                    <td>
+                        <a th:href="@{/emp/delete(id=${emp.username})}">删除信息</a>&nbsp;
+                        <!--<a href="change_mumber.html?param1=username">修改信息</a>-->
+<!--                        <a th:href="@{/ems/toChange_mumber(id=${emp.username})}">修改信息</a>-->
+                        <a th:href="@{/emp/manager_change(id=${emp.username})}">修改信息</a>
+
+                        <!--
+                                                <input type="button" class="button" onclick="location.href='/ems/toChange_mumber'" value="修改信息 &raquo;"/>
+                        -->
+                    </td>
+                </tr>
+
+            </table>
+            <p>
+                <input type="button" class="button" value="添加角色" onclick="location.href='/ems/toSave'"/>
+<!--                <button onclick="window.location.href='add_mumber.html'">添加角色</button>-->
+            </p>
+        </div>
+        <!--毕业设计流程控制-->
+        <!--选题，开题，中期，提交，评分-->
+        <form th:action="@{/user/super}" method="post">
+            <table cellpadding="0" cellspacing="0" border="0"
+                   class="form_table">
+
+                <tr>
+                    <td valign="middle">
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;毕业设计流程控制:
+                    </td>
+                    <td valign="middle">
+
+                        <input type="radio" class="inputgri" name="statu" value="a" checked="checked"/>
+                        选题
+                        <input type="radio" class="inputgri" name="statu" value="b"/>
+                        开题
+                        <input type="radio" class="inputgri" name="statu" value="c"/>
+                        中期
+                        <input type="radio" class="inputgri" name="statu" value="d"/>
+                        提交
+                        <input type="radio" class="inputgri" name="statu" value="e"/>
+                        评分
+                    </td>
+                </tr>
+
+                <tr class="input-super">
+                    <td valign="middle" >
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;验证码:
+                        <img id="num" th:src="@{/user/code}"/>
+                        <a href="javascript:;"
+                           onclick="document.getElementById('num').src = '/ems/user/code?'+(new Date()).getTime()">换一张</a>
+                    </td>
+                    <td valign="middle" align="left">
+                        <input type="text" class="inputgri" name="code"/>
+                    </td>
+                </tr>
+            </table>
+            <p class="input-super">
+                <input type="submit" class="button" value="提交"/>
+                <a href="javascript:history.go(-1);">返回上一页</a>
+            </p>
+
+        </form>
+    </div>
+    <div id="footer">
+        <div id="footer_bg">
+            @Chenyifei
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

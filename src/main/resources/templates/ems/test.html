@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="utf-8" />
+    <title>毕业设计总体提交</title>
+    <link rel="stylesheet" th:href="@{/static/css/style.css}"/>
+    <link rel="stylesheet" th:href="@{/static/css/editormd.css}"/>
+    <link rel="shortcut icon" href="https://pandao.github.io/editor.md/favicon.ico" type="image/x-icon" />
+</head>
+<body>
+<div id="layout">
+    <header>
+        <h1>毕业设计总体提交</h1>
+    </header>
+    <div id="test-editormd">
+        <textarea style="display:none;" id="text">##在此编辑你的文章</textarea>
+    </div>
+    <div id="b_btn">
+        <button style="width: 50px;height: 20px" class="btn" onclick="upload()">上传</button>
+        <!--<button style="width: 50px;height: 20px" class="btn" onclick="update()">更新</button>-->
+    </div>
+    <script th:src="@{/static/js/example/jquery.min.js}"></script>
+    <script th:src="@{/static/js/editormd.min.js}"></script>
+    <script th:inline="javascript">
+        function upload(){
+            let content = $("#text").text(); //获取富文本框中的值
+            let sub = [[${sub}]];
+            let name=document.getElementById("name").value;
+            let teacherid = sub.teacher_id;
+            let studentid = sub.student_id;
+            //debugger;
+            //console.log(sub.teacher_id);
+            $.ajax({
+                //url: '<%=request.getContextPath()%>/user/test',
+                url: '/ems/user/stu_addarticle',
+                type: 'post',
+                data: {
+                    'content' : content,
+                    "sub_teacher_id" : teacherid,
+                    "sub_student_id" : studentid
+                },
+                success:function (data){
+                    console.log(data);
+                    alert("上传成功！");
+                }
+            })
+        }
+        function update(){
+            let content = $("#text").text(); //获取富文本框中的值
+            let sub = [[${sub}]];
+            let teacherid = sub.teacher_id;
+            let studentid = sub.student_id;
+            //debugger;
+            //console.log(sub.teacher_id);
+            $.ajax({
+                //url: '<%=request.getContextPath()%>/user/test',
+                url: '/ems/user/stu_updatearticle',
+                type: 'post',
+                data: {
+                    'content' : content,
+                    "sub_teacher_id" : teacherid,
+                    "sub_student_id" : studentid
+                },
+                success:function (data){
+                    console.log(data);
+                    alert("修改成功！");
+                }
+            })
+        }
+    </script>
+    <script type="text/javascript">
+        var testEditor;
+        //debugger;
+        $(function() {
+            testEditor = editormd("test-editormd", {
+                width   : "90%",
+                height  : 640,
+                syncScrolling : "single",
+                path    : "../static/lib/"
+            });
+
+            /*
+            // or
+            testEditor = editormd({
+                id      : "test-editormd",
+                width   : "90%",
+                height  : 640,
+                path    : "../lib/"
+            });
+            */
+
+        });
+    </script>
+</div>
+</body>
+</html>

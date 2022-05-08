@@ -1,0 +1,82 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html xmlns:th="http://www.thyemleaf.org">
+<head>
+    <title>student_d</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <link th:href="@{/static/css/style.css}" rel="stylesheet">
+    <link rel="stylesheet" th:href="@{/static/css/style.css}"/>
+    <link rel="stylesheet" th:href="@{/static/css/editormd.css}"/>
+    <link rel="icon" th:href="@{/static/img/swpu.ico}" type="image/x-icon"/>
+    <script th:src="@{/static/js/example/jquery.min.js}"></script>
+    <script th:src="@{/static/js/editormd.min.js}"></script>
+    <!-- <link rel="stylesheet" th:href="${urls.getForLookupPath('/css/style.css')}">-->
+</head>
+
+<body>
+
+<div id="wrap">
+    <div id="top_content">
+        <div id="content">
+            <p id="whereami">
+            </p>
+            <h1>
+                &nbsp;&nbsp;请上传您毕业设计及文档
+
+
+            </h1>
+            <form method="post" action="/ems/user/stu_add_d" enctype="multipart/form-data">
+                <!--<div>
+                    <td>
+                        您的分数:
+                    </td>
+                    <span th:if="${score}" th:text="${score}" ></span>
+                </div>-->
+            <div id="test-editormd">
+                <textarea style="display:none;" id="text" name="content">##在此编辑你的文章</textarea>
+            </div>
+            <td valign="middle" align="right">
+                上传文档:
+            </td>
+            <td valign="middle" align="left">
+                <input type="file" name="file"/>
+                <input type="hidden" th:value="${teacher_id}" name="teacher_id">
+                <input type="hidden" th:value="${id}" name="student_id">
+                <p>
+                    <input type="submit" value="上传">
+                </p>
+            </td>
+
+           <!-- <div id="b_btn">
+                <button style="width: 50px;height: 20px" class="btn" onclick="upload()">提交</button>
+            </div>-->
+
+            </form>
+            <script type="text/javascript">
+                var testEditor;
+                //debugger;
+                $(function() {
+                    testEditor = editormd("test-editormd", {
+                        width   : "90%",
+                        height  : 640,
+                        syncScrolling : "single",
+                        path    : "../static/lib/"
+                    });
+                    debugger;
+                    let msg = "[[${msg}]]"
+                    if (msg == "success"){
+                        alert("上传成功！")
+                    }else if(msg == "error"){
+                        alert("上传失败")
+                    }
+                });
+            </script>
+        </div>
+    </div>
+    <div id="footer">
+        <div id="footer_bg">
+            @Chenyifei
+        </div>
+    </div>
+</div>
+</body>
+</html>

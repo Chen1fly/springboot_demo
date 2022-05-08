@@ -1,0 +1,72 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>teacher_c</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <link th:href="@{/static/css/style.css}" rel="stylesheet">
+    <link rel="icon" th:href="@{/static/img/swpu.ico}" type="image/x-icon"/>
+</head>
+<body>
+<div id="wrap">
+    <div id="top_content">
+        <div id="header">
+            <div id="rightheader">
+                <p>
+                    <br/>
+                </p>
+            </div>
+            <div id="topheader">
+                <h1 id="title">
+                    <a href="#">教师-中期文档管理</a>
+                </h1>
+            </div>
+            <div id="navigation">
+            </div>
+        </div>
+        <div id="content">
+            <p id="whereami">
+            </p>
+            <table class="table">
+                <tr class="table_header">
+                    <td>
+                        教师
+                    </td>
+                    <td>
+                        已提交学生
+                    </td>
+                    <td>
+                        中期报告状态
+                    </td>
+                    <td>
+                        操作
+                    </td>
+                </tr>
+                <tr class="row1" th:each="article:${articleb}">
+                    <td>
+                        <span th:text="${article.teacher_id}"></span>
+                    </td>
+                    <td>
+                        <span th:text="${article.student_id}"></span>
+                    </td>
+                    <td>
+                        <span th:text="${article.statu}"></span>
+                    </td>
+                    <td>
+                        <a th:href="@{/user/download(teacher_id=${article.teacher_id},student_id=${article.student_id})}">下载报告</a>
+                        <a th:href="@{/user/c_pass(teacher_id=${article.teacher_id},student_id=${article.student_id})}">审批通过</a>
+                    </td>
+                </tr>
+
+            </table>
+        </div>
+
+    </div>
+    <div id="footer">
+        <div id="footer_bg">
+            @Chenyifei
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,129 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>teacher_选题阶段</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <link th:href="@{/static/css/style.css}" rel="stylesheet">
+    <link rel="icon" th:href="@{/static/img/swpu.ico}" type="image/x-icon"/>
+</head>
+<body>
+<div id="wrap">
+    <div id="top_content">
+        <div id="header">
+            <div id="rightheader">
+                <p>
+
+                    <br/>
+                </p>
+            </div>
+            <div id="topheader">
+                <h1 id="title">
+                    <a href="#">教师-选题管理</a>
+                </h1>
+            </div>
+            <div id="navigation">
+            </div>
+        </div>
+        <div id="content">
+            <p id="whereami">
+            </p>
+            <!--双选信息-->
+            <table class="table">
+                <tr class="table_header">
+                    <td>
+                        我的课题
+                    </td>
+                    <td>
+                        已选学生
+                    </td>
+                    <td>
+                        选课状态
+                    </td>
+                    <td>
+                        双选状态
+                    </td>
+                    <td>
+                        操作
+                    </td>
+
+                </tr>
+                <tr class="row1" th:each="subs:${subs}">
+                    <td>
+                        <span th:text="${subs.teacher_subject}"></span>
+                    </td>
+                    <td>
+                        <span th:text="${subs.student_id}"></span>
+                    </td>
+                    <td>
+                        <span style='color:red' th:text="${subs.sub_status}"></span>
+                    </td>
+                    <td>
+                        <span style='color:red' th:text="${subs.statu}"></span>
+                    </td>
+                    <td>
+                        <a th:if="${subs.statu eq '未双选'&& not #strings.isEmpty(subs.student_id)} "th:href="@{/emp/tea_choose(
+                        student_id=${subs.student_id},teacher_id=${subs.teacher_id},teacher_subject=${subs.teacher_subject}
+                        )}">确认双选</a>&nbsp;
+                    </td>
+                </tr>
+
+            </table>
+            <!--毕业设计题目-->
+            <table class="table">
+                <tr class="table_header">
+                    <td>
+                        毕业设计题目
+                    </td>
+                </tr>
+                <tr class="row1" id="sub1" th:each="sub:${subs}" >
+                    <td>
+                       <span th:text="${sub.teacher_subject}"></span>
+
+                    </td>
+
+                </tr>
+
+            </table>
+
+
+        </div>
+
+        <form th:action="@{/user/add_subject}" method="post">
+            <!--                <span th:text="${s}"> </span>-->
+            <table cellpadding="0" cellspacing="0" border="0"
+                   class="form_table">
+                <tr>
+                    <td valign="middle" align="right">
+                        <script type="text/javascript">
+
+                        </script>
+                        <input th:value="${tea}" type="hidden" class="inputgri" name="teacher_id">
+                    </td>
+                    <td valign="middle" align="right">
+                        发布毕业设计题目:
+                    </td>
+                        <td valign="middle" align="left">
+                            <input type="text" class="inputgri" name="teacher_subject"/>
+                        </td>
+                    </td>
+                    <td>
+                        <p>
+                            <input type="submit" class="button" value="提交 &raquo;" />
+                        </p>
+                    </td>
+                </tr>
+            </table>
+
+        </form>
+
+    </div>
+
+    <div id="footer">
+        <div id="footer_bg">
+            @Chenyifei
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

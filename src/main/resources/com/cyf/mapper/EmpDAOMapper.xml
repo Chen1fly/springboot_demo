@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.cyf.dao.EmpDAO">
+
+    <!--查询所有-->
+    <select id="findAll" resultType="Emp">
+        select username,password,phone,job from Sys_mumber
+    </select>
+
+    <!--添加员工-->
+    <insert id="save" parameterType="Emp">
+        insert Sys_mumber values (#{username},#{password},#{phone},#{job})
+    </insert>
+
+    <!--删除员工-->
+    <delete id="delete" parameterType="String">
+        delete from Sys_mumber where username=#{username}
+    </delete>
+    <select id="find" parameterType="String" resultType="Emp">
+        select username,password,phone,job from Sys_mumber
+        where username =#{username}
+    </select>
+    <select id="t_sub"  resultType="com.cyf.entity.Sub">
+        select * from teacher_subject
+        where teacher_id=#{username};
+    </select>
+    <select id="findSub" resultType="com.cyf.entity.Sub">
+        select teacher_id,teacher_subject,student_id,sub_status from teacher_subject;
+    </select>
+    <!--学生登录b阶段时必需的查找，非界面显示-->
+    <select id="stu_search" resultType="com.cyf.entity.Sub">
+        select * from teacher_subject
+        where student_id=#{student_id};
+
+    </select>
+    <!--教师b阶段查找-->
+    <select id="tea_b" resultType="com.cyf.entity.ArticleA">
+        select * from article_a
+        where teacher_id=#{teacher_id};
+    </select>
+    <!--学生c阶段查找对应教师-->
+    <select id="stu_tea" resultType="java.lang.String">
+        select teacher_id from article_a
+        where student_id=#{student_id} and article_a_statu="通过";
+    </select>
+    <!--教师c阶段查询-->
+    <select id="tea_c" resultType="com.cyf.entity.ArticleB">
+        select * from article_b
+        where teacher_id=#{teacher_id};
+    </select>
+    <select id="stu_tea_d" resultType="java.lang.String">
+        select statu from article_b
+        where student_id=#{student_id};
+    </select>
+    <select id="stu_tea_d2" resultType="java.lang.String">
+        select teacher_id from article_b
+        where student_id=#{student_id};
+    </select>
+    <select id="tea_d" resultType="com.cyf.entity.ArticleC">
+        select * from article_c
+        where teacher_id=#{teacher_id};
+    </select>
+    <select id="stu_tea_d3" resultType="java.lang.String">
+        select statu from article_c
+        where student_id=#{student_id};
+    </select>
+    <!--查询课题-->
+    <select id="stu_tea_d4" resultType="java.lang.String">
+        select teacher_subject from teacher_subject
+        where student_id=#{student_id};
+    </select>
+    <!--修改员工-->
+    <update id="update" parameterType="Emp">
+        update Sys_mumber set password=#{password},phone=#{phone},job=#{job}
+        where username=#{username}
+    </update>
+    <!--学生选课-->
+    <update id="stu_choose">
+        update teacher_subject set student_id=#{student_id},sub_status='已选'
+        where teacher_id=#{teacher_id} and teacher_subject=#{teacher_subject};
+    </update>
+    <!--教师确认双选-->
+    <update id="tea_choose">
+        update teacher_subject set statu='双选成功'
+        where teacher_id=#{teacher_id} and teacher_subject=#{teacher_subject} and student_id=#{student_id};
+    </update>
+</mapper>

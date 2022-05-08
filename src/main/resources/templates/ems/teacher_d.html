@@ -1,0 +1,98 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>teacher_c</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <link th:href="@{/static/css/style.css}" rel="stylesheet">
+    <link rel="icon" th:href="@{/static/img/swpu.ico}" type="image/x-icon"/>
+    <script th:src="@{/static/js/example/jquery.min.js}"></script>
+    <script type="text/javascript" th:inline="javascript">
+        function score(td) {
+            let a1 = document.getElementById("score").parentNode;
+            let parentTR = a1.parentNode;
+            //let parentTR = td.parentNode.parentNode; // 获取当前 A 标签所在的TR
+            let temp = $(parentTR).children('td').eq(0).text(); //获取TR 标签下第一个TD 标签的值
+            let studentid = temp.replace(/[ ]|[\r\n]/g,"");
+            let temp1 = prompt("请输入评分", "");
+            let score = temp1+"分";
+            let teacherid = [[${id}]];
+            $.ajax({
+                url: '/ems/user/setscore',
+                type: 'post',
+                data: {
+                    'score' : score,
+                    "teacher_id" : teacherid,
+                    "student_id" : studentid
+                },
+                success:function (data){
+                    console.log(data);
+                    alert("评分成功！");
+                }
+            })
+
+        }
+    </script>
+</head>
+<body>
+<div id="wrap">
+    <div id="top_content">
+        <div id="header">
+            <div id="rightheader">
+                <p>
+                    <br/>
+                </p>
+            </div>
+            <div id="topheader">
+                <h1 id="title">
+                    <a href="#">教师-毕业设计管理</a>
+                </h1>
+            </div>
+            <div id="navigation">
+            </div>
+        </div>
+        <div id="content">
+            <p id="whereami">
+            </p>
+            <table class="table">
+                <tr class="table_header">
+                    <td>
+                        学生
+                    </td>
+                    <td>
+                        文档
+                    </td>
+                    <td>
+                        状态
+                    </td>
+                    <td>
+                        操作
+                    </td>
+                </tr>
+                <tr class="row1" th:each="article:${articlec}">
+                    <td>
+                        <span th:text="${article.student_id}"></span>
+                    </td>
+                    <td>
+                        <span th:text="${article.content}"></span>
+                    </td>
+                    <td>
+                        <span th:text="${article.statu}"></span>
+                    </td>
+                    <td>
+                        <a th:href="@{/user/download2(teacher_id=${article.teacher_id},student_id=${article.student_id})}">下载文档</a>
+                        <a href="javascript:score(this)" id="score">打分</a>
+                    </td>
+                </tr>
+
+            </table>
+        </div>
+    </div>
+    <div id="footer">
+        <div id="footer_bg">
+            @Chenyifei
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

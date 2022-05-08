@@ -1,0 +1,93 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>学生选题</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <link th:href="@{/static/css/style.css}" rel="stylesheet">
+    <link rel="icon" th:href="@{/static/img/swpu.ico}" type="image/x-icon"/>
+</head>
+<body>
+<div id="wrap">
+    <div id="top_content">
+        <div id="header">
+            <div id="rightheader">
+                <p>
+                    <br/>
+                </p>
+            </div>
+            <div id="topheader">
+                <h1 id="title">
+                    <a href="#">学生选题</a>
+                </h1>
+            </div>
+            <div id="navigation">
+            </div>
+        </div>
+        <div id="content">
+            <p id="whereami">
+            </p>
+            <h1>
+                欢迎!
+            </h1>
+            <table class="table">
+                <tr class="table_header">
+                    <td>
+                        教师
+                    </td>
+                    <td>
+                        课题
+                    </td>
+                    <td>
+                        状态
+                    </td>
+                    <td>
+                        操作
+                    </td>
+
+                </tr>
+                <tr class="row1" th:each="subs:${subs}">
+                    <td>
+                        <span th:text="${subs.teacher_id}"></span>
+                    </td>
+                    <td>
+                        <span th:text="${subs.teacher_subject}"></span>
+                    </td>
+                    <td>
+                        <span style='color:red' th:text="${subs.sub_status}"></span>
+                    </td>
+                    <td>
+                        <a th:if="${subs.sub_status} eq '未选'" th:href="@{/emp/stu_choose(
+                        student_id=${stu_id},teacher_id=${subs.teacher_id},teacher_subject=${subs.teacher_subject}
+                        )}">选题</a>&nbsp;
+                        <!--style="visibility:visible"-->
+                        <!--<script th:inline="javascript">
+                            var img_demo = document.getElementById("sub_choose");
+                            var sub = [[${subs}]];
+                            var stu_id = [[${stu_id}]];
+                            console.log(sub);
+                            if (sub.sub_status=="可选"){
+                                img_demo.style = "visibility:visible";
+                                /*document.write("<a href='/emp/stu_choose?id="+stu_id+" '>选题</a>&nbsp;");*/
+
+                            }else {
+                                img_demo.style = "visibility:hidden";
+                            }
+
+                        </script>-->
+                    </td>
+                </tr>
+
+            </table>
+        </div>
+
+    </div>
+    <div id="footer">
+        <div id="footer_bg">
+            @Chenyifei
+        </div>
+    </div>
+</div>
+
+</body>
+
+</html>

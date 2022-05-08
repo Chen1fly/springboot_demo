@@ -1,0 +1,195 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>teacher_b</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <link th:href="@{/static/css/style.css}" rel="stylesheet">
+    <link rel="icon" th:href="@{/static/img/swpu.ico}" type="image/x-icon"/>
+</head>
+<body>
+<div id="wrap">
+    <div id="top_content">
+        <div id="header">
+            <div id="rightheader">
+                <p>
+                    <br/>
+                </p>
+            </div>
+            <div id="topheader">
+                <h1 id="title">
+                    <a href="#">教师-开题报告管理</a>
+                </h1>
+            </div>
+            <div id="navigation">
+            </div>
+        </div>
+        <div id="content">
+            <p id="whereami">
+            </p>
+            <table class="table">
+                <tr class="table_header">
+                    <td>
+                        学生
+                    </td>
+                    <td>
+                        开题报告
+                    </td>
+                    <td>
+                        状态
+                    </td>
+                    <td>
+                        批注
+                    </td>
+                    <td>
+                        操作
+                    </td>
+
+
+
+
+                </tr>
+                <tr class="row1" th:each="subs:${subs}" id="stu_id">
+                    <td>
+                        <span th:text="${subs.student_id}" ></span>
+                    </td>
+                    <td>
+                        <span  th:text="${subs.article_a}"></span>
+                    </td>
+                    <td>
+                        <span style='color:red' th:text="${subs.article_a_statu}"></span>
+                    </td>
+                    <td>
+                        <span  th:text="${subs.statement}"></span>
+                    </td>
+<!--
+                    th:href="@{/emp/tea_choose}"
+                    th:if="${subs.getStatement() eq '无'}"
+-->
+                    <script th:src="@{/static/js/example/jquery.min.js}"></script>
+                    <script type="text/javascript" th:inline="javascript">
+                        function btn1(td) {
+                            let parentTR = td.parentNode.parentNode; // 获取当前 A 标签所在的TR
+                            let temp = $(parentTR).children('td').eq(0).text(); //获取TR 标签下第一个TD 标签的值
+                            let studentid = temp.replace(/[ ]|[\r\n]/g,"");
+                            //alert(firstTd_value);
+                            let statement = prompt("请输入您的批注", ""); //将输入的内容赋给变量 name,
+                            let sub = [[${subs}]];
+                            //let studentid = document.getElementById("stu_id").innerText;
+                            //let studentid = sub.student_id;
+                            let teacherid = [[${tea}]];
+                            //这里需要注意的是，prompt有两个参数，前面是提示的话，后面是当对话框出来后，在对话框里的默 认值
+
+                            $.ajax({
+                                url: '/ems/user/setstatement',
+                                type: 'post',
+                                data: {
+                                    'statement' : statement,
+                                    "sub_teacher_id" : teacherid,
+                                    "sub_student_id" : studentid
+                                },
+                                success:function (data){
+                                    console.log(data);
+                                    alert("上传成功！");
+                                }
+                            })
+
+                        }
+                        function btn2(td) {
+
+                            let parentTR = td.parentNode.parentNode; // 获取当前 A 标签所在的TR
+                            let temp = $(parentTR).children('td').eq(0).text(); //获取TR 标签下第一个TD 标签的值
+                            let studentid = temp.replace(/[ ]|[\r\n]/g,"");
+                            //alert(firstTd_value);
+                            //let sub = [[${subs}]];
+                            //let studentid = document.getElementById("stu_id").innerText;
+                            //let studentid = sub.student_id;
+                            let teacherid = [[${tea}]];
+                            $.ajax({
+                                url: '/ems/user/setstatu',
+                                type: 'post',
+                                data: {
+                                    "sub_teacher_id" : teacherid,
+                                    "sub_student_id" : studentid
+                                },
+                                success:function (){
+                                    alert("审批成功！");
+                                }
+                            })
+                        }
+                    </script>
+                    <!-- && ${subs.index} eq 1-->
+                    <td>
+                        <input type="button" value="添加批注" th:if="${subs.getStatement() eq '无'}"
+                                onclick="btn1(this)"/>
+                        <input type="button" value="审批通过" th:if="${subs.getArticle_a_statu() eq '未过'}"
+                               onclick="btn2(this)"/>
+                    </td>
+                    <!--<td>
+                        <a th:if="${subs.statu eq '未双选'&& not #strings.isEmpty(subs.student_id)} "th:href="@{/emp/tea_choose(
+                        student_id=${subs.student_id},teacher_id=${subs.teacher_id},teacher_subject=${subs.teacher_subject}
+                        )}">确认双选</a>&nbsp;
+                    </td>-->
+                </tr>
+
+            </table>
+            <!--毕业设计题目-->
+            <!--<table class="table">
+                <tr class="table_header">
+                    <td>
+                        毕业设计题目
+                    </td>
+                </tr>
+                <tr class="row1" id="sub1" th:each="sub:${subs}" >
+                    <td>
+                        <span th:text="${sub.teacher_subject}"></span>
+
+                    </td>
+
+                </tr>
+
+            </table>
+
+
+        </div>
+
+        <form th:action="@{/user/add_subject}" method="post">
+            &lt;!&ndash;                <span th:text="${s}"> </span>&ndash;&gt;
+            <table cellpadding="0" cellspacing="0" border="0"
+                   class="form_table">
+                <tr>
+                    <td valign="middle" align="right">
+                        <script type="text/javascript">
+
+                        </script>
+                        <input th:value="${tea}" type="hidden" class="inputgri" name="teacher_id">
+                    </td>
+                    <td valign="middle" align="right">
+                        发布毕业设计题目:
+                    </td>
+                    <td valign="middle" align="left">
+                        <input type="text" class="inputgri" name="teacher_subject"/>
+                    </td>
+                    </td>
+                    <td>
+                        <p>
+                            <input type="submit" class="button" value="提交 &raquo;" />
+                        </p>
+                    </td>
+                </tr>
+            </table>
+
+        </form>
+
+    </div>
+-->
+
+</div>
+    </div>
+        <div id="footer">
+            <div id="footer_bg">
+                @Chenyifei
+            </div>
+        </div>
+</div>
+</body>
+</html>
