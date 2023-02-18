@@ -48,4 +48,6 @@ public interface UserDAO {
     String download2(@Param("student_id") String student_id,@Param("teacher_id") String teacher_id);
 
     void setscore(@Param("student_id") String student_id,@Param("teacher_id") String teacher_id,@Param("statu")  String score);
+
+    Sub stu_search(@Param("student_id") String student_id);
 }

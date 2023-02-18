@@ -2,6 +2,7 @@ package com.cyf.service;
 
 import com.cyf.dao.UserDAO;
 import com.cyf.entity.Statu;
+import com.cyf.entity.Sub;
 import com.cyf.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -102,6 +103,11 @@ public class UserServiceImpl implements UserService {
     @Override
     public void setscore(String student_id, String teacher_id, String score) {
         userDAO.setscore(student_id, teacher_id, score);
+    }
+
+    @Override
+    public Sub stu_search(String student_id) {
+        return userDAO.stu_search(student_id);
     }
 
 }

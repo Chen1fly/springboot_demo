@@ -5,7 +5,6 @@ import com.cyf.entity.User;
 import com.cyf.service.UserService;
 import com.cyf.utils.ValidateImageCodeUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.web.servlet.server.Session;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -166,7 +165,7 @@ public class UserController {
                         return "redirect:/emp/findSub?stu_id=" + username;
                     case "b":
                         System.out.println("b");
-                        return "redirect:/emp/stu_b?stu_id=" + username;
+                        return "redirect:/emp/stu_b?student_id=" + username;
                     case "c":
                         System.out.println("c");
                         return "redirect:/emp/stu_c?id=" + username;
@@ -175,7 +174,7 @@ public class UserController {
                         return "redirect:/emp/stu_d?id=" + username;
                     case "e":
                         System.out.println("e");
-                        return "redirect:/emp/findAll";
+                        return "redirect:/emp/stu_d?id=" + username;
                 }
             } else if (job.equals("教师")) {
                 statu = userService.query();
@@ -194,7 +193,7 @@ public class UserController {
                         return "redirect:/emp/tea_d?id=" + username;
                     case "e":
                         System.out.println("e");
-                        return "redirect:/emp/findAll";
+                        return "redirect:/emp/tea_d?id=" + username;
                 }
             } else if (job.equals("管理员")) {
                 return "redirect:/emp/findAll";
@@ -264,7 +263,7 @@ public class UserController {
         //获取文件后缀名
         String suffix = filename.substring(filename.lastIndexOf("."));
         //上传的文件放在D盘下的upload文件夹中
-        String path = "/finalwork/upload/";
+        String path = "/d:/upload_d/";
         //String path = "/d:/upload_d/";
         //防止文件名重复  随机文件名
         filename = path + UUID.randomUUID() + suffix;
@@ -330,7 +329,7 @@ public class UserController {
         //获取文件后缀名
         String suffix = filename.substring(filename.lastIndexOf("."));
         //上传的文件放在D盘下的upload文件夹中
-        String path = "/finalwork/upload_d/";
+        String path = "/d:/upload_d/";
         /*String path = "finalwork\\upload_d\\";*/
         //防止文件名重复  随机文件名
         filename = path + UUID.randomUUID() + suffix;

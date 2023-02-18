@@ -1,6 +1,7 @@
 package com.cyf.service;
 
 import com.cyf.entity.Statu;
+import com.cyf.entity.Sub;
 import com.cyf.entity.User;
 
 public interface UserService {
@@ -38,4 +39,6 @@ public interface UserService {
     String download2(String student_id, String teacher_id);
 
     void setscore(String student_id, String teacher_id, String score);
+
+    Sub stu_search(String student_id);
 }

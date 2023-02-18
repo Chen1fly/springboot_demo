@@ -80,7 +80,7 @@ public class EmpController {
         //System.out.println(allList);
         model.addAttribute("subs", allList);
         //System.out.println(allList.get(1).getTeacher_id());
-        model.addAttribute("tea", allList.get(1).getTeacher_id());
+        model.addAttribute("tea", allList.get(0).getTeacher_id());
         return "ems/teacher_a";
         /*try {
             //String user = (String) model.getAttribute("id");
@@ -121,7 +121,7 @@ public class EmpController {
 
     /*学生b阶段*/
     @GetMapping(value = "/stu_b")
-    public String stu_b(Model model, String stu_id) {
+    public String stu_b(Model model, String student_id) {
         //System.out.println(id);
         //List<Sub> allList = empService.t_sub(id);
         //System.out.println(allList);
@@ -129,8 +129,9 @@ public class EmpController {
         //System.out.println(allList.get(1).getTeacher_id());
         //model.addAttribute("tea", allList.get(1).getTeacher_id());
         try {
-            System.out.println(stu_id);
-            Sub sub = empService.stu_search(stu_id);
+            System.out.println(student_id);
+            Sub sub = empService.stu_search(student_id);
+            //System.out.println("test");
             model.addAttribute("sub",sub);
             return "ems/student_b";
         }catch (Exception ex){

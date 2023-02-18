@@ -11,6 +11,11 @@
         insert into teacher_subject(teacher_id,teacher_subject,sub_status,statu)
         values (#{teacher_id},#{teacher_subject},"未选","未双选");
     </insert>
+    <!--学生登录b阶段时必需的查找，非界面显示-->
+    <select id="stu_search" resultType="com.cyf.entity.Sub">
+        select * from teacher_subject
+        where student_id=#{student_id};
+    </select>
     <!--学生b阶段添加文章-->
     <insert id="add_articleA">
         INSERT INTO article_a (student_id,teacher_id,article_a,article_a_statu,statement)
