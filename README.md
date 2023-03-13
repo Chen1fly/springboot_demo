@@ -126,7 +126,7 @@
 暂无
 ### 部署
 
-http://121.199.62.19:8080/ems/index
+http://121.199.62.19:8080/ems/index (现已失效)
 
 ### 使用到的框架
 
@@ -136,7 +136,7 @@ http://121.199.62.19:8080/ems/index
 
 ### 作者
 
-chenyi.fei@163.com
+chenyi.jug@gmail.com
 
 *@Chenyifei*
 
